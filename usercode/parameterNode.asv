@@ -1,0 +1,89 @@
+function [id] = parameterNode(parameter,control,value,duration)
+% parameterNode - Example2, type select 
+%
+% Syntax: parameterNode(parameter,control,value)
+%
+% Inputs:
+%   parameter - elevation,basedemand,initqual,head,pressure,chlorine,demand
+%    control  - Above > , Below < 
+%       value - ex. above > value
+%    duration - duration of control
+% 
+% Outputs: find what nodes are above or below a price accordingly.
+% 
+% Example:    [id] = EN_parameterNode('elevation','above',100)
+%
+% Other m-files
+% required:ENsettimeparam,ENsolveH,ENsolveQ
+% Subfunctions: none
+% MAT-files required: none
+%
+% See also: 
+% 
+% Professor:Marios M. Polycarpou, Department of Electrical and Computer Engineering
+% Author: Demetrios G. Eliades, Ph.D., Electrical Engineering
+% Student: Marios Kyriakou
+% KIOS Research Center for Intelligent Systems and Networks
+% emails: mpolycar@ucy.ac.cy, eldemet@ucy.ac.cy , mkiria01@ucy.ac.cy 
+% Website: http://www.kios.ucy.ac.cy
+% Oct 2011; Last revision: 5-Oct-2011
+
+%------------- BEGIN CODE --------------
+%    /*Duration*/
+    d=duration+2;
+    ENsettimeparam('duration',3600*duration)
+
+    % LIMIDED for parameter
+control = upper(control);
+switch control
+    case 'ABOVE'
+        control= char('>');
+    case 'BELOW'
+        control= char('<');
+end
+
+index = 1 ; 
+while index < ENgetcount('nodes') + 1
+% code=ENgetconstants('pressure');
+for i=1:1:d-1
+ENsolveH;
+ENsolveQ;
+ENsettimeparam('duration',3600*i);%nodes
+valuess(i)=ENgetnodevalue(index,parameter);
+end
+v(index,:==)=valuess;
+
+% a=1;
+% D(1:d-1,a)=valuess;
+% 
+% j = min(D);
+% z(index,:)=min(j);
+f = index;  % because Subscript indices must either be real positive integers or logicals.
+id=ENgetnodeid(index);
+
+e(index) = sprintf('%.f %s %.f',v,control,value); 
+% e  = v < value;
+
+index = index + 1;
+
+end
+
+t = 1;
+b=1;
+
+if e==0
+    id =0;
+end
+
+while t < ENgetcount('nodes') + 1
+    
+   if  e(t)~=0
+       id(b) = ENgetnodeid(t);
+       b=b+1;
+   end
+   
+t =t+1;
+end
+
+
+end

@@ -1,0 +1,336 @@
+function varargout = Parameters(varargin)
+% PARAMETERS M-file for Parameters.fig
+%      PARAMETERS, by itself, creates a new PARAMETERS or raises the existing
+%      singleton*.
+%
+%      H = PARAMETERS returns the handle to a new PARAMETERS or the handle to
+%      the existing singleton*.
+%
+%      PARAMETERS('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in PARAMETERS.M with the given input arguments.
+%
+%      PARAMETERS('Property','Value',...) creates a new PARAMETERS or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before Parameters_OpeningFcn gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to Parameters_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help Parameters
+
+% Last Modified by GUIDE v2.5 19-Apr-2012 08:32:08
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @Parameters_OpeningFcn, ...
+                   'gui_OutputFcn',  @Parameters_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+
+% --- Executes just before Parameters is made visible.
+function Parameters_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to Parameters (see VARARGIN)
+
+% Choose default command line output for Parameters
+handles.output = hObject;
+
+% Update handles structure
+guidata(hObject, handles);
+
+set(handles.figure1,'name','Reaction Parameter');
+set(handles.uitable1,'visible','off');
+set(handles.nodesc,'Visible','on')
+set(handles.linksc,'Visible','on')
+
+% UIWAIT makes Parameters wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+
+
+% --- Outputs from this function are returned to the command line.
+function varargout = Parameters_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+% --- Executes when user attempts to close figure1.
+function figure1_CloseRequestFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: delete(hObject) closes the figure
+delete(hObject);
+
+
+% --- Executes on button press in backbutton.
+function backbutton_Callback(hObject, eventdata, handles)
+% hObject    handle to backbutton (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.nodesc,'Visible','on');
+set(handles.linksc,'Visible','on');
+set(handles.backbutton,'Visible','off');
+
+% clear table
+table = get(handles.uitable1,'data');
+table = {''};
+set(handles.uitable1,'data',table);
+
+set(handles.uitable1,'Visible','off');
+
+
+% --------------------------------------------------------------------
+function node_Callback(hObject, eventdata, handles)
+% hObject    handle to node (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.nodesc,'Visible','off')
+set(handles.linksc,'Visible','off')
+set(handles.uitable1,'Visible','on')
+
+set(handles.nodesc,'Value',1);%choise node
+set(handles.linksc,'Value',0);
+
+% clear table
+table = get(handles.uitable1,'data');
+table = {''};
+set(handles.uitable1,'data',table);
+
+
+% Parameters
+
+i=1;
+table = get(handles.uitable1,'data');
+
+while i < ENgetcount('nodes')+1
+    table{i,2} = char(ENgetnodeid(i));     % set in table -> Type and ID nodes
+    table{i,1} = char(ENgetnodetype(i));   % column 1 and 2.
+    i=i+1;
+end
+   
+    
+Idparameter{1} = char('Type');
+Idparameter{2} = char('ID');
+columneditTable{1} =  false; % false = 0, %True=1
+columneditTable{2} = false;
+i=1; 
+W=3;
+while i< ENgetcount('nodes')+1  %for each node, calculate value for species.
+    
+    j=1;
+    t=3;
+    while j <  MSXgetcount('species')+1
+       nodevalue = MSXgetparameter('MSX_NODE',i,j);  % i is index for node
+       table{i,t} = nodevalue;                      % j is index for species
+       j=j+1;
+       t=t+1; % column
+       Idparameter{W} =  MSXgetID(i,'species'); 
+       columneditTable{W} = true;
+    end
+    W=W+1;
+    i=i+1;
+end
+
+set(handles.uitable1,'ColumnName',{char(Idparameter)});
+
+i=1;
+while i <length(columneditTable)+1 %set edit column
+
+    c(i) = logical(columneditTable{i});
+    
+    i=i+1;
+end
+
+    
+set(handles.uitable1,'ColumnEditable',[c]); % false = ok
+                                                     % true = edit column
+set(handles.uitable1,'data',table);
+
+handles.Idparameter = Idparameter;
+
+% Update handles structure
+guidata(hObject, handles);
+
+% --------------------------------------------------------------------
+function link_Callback(hObject, eventdata, handles)
+% hObject    handle to link (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+set(handles.nodesc,'Visible','off')
+set(handles.linksc,'Visible','off')
+set(handles.uitable1,'Visible','on')
+
+set(handles.linksc,'Value',1);%choise link
+set(handles.nodesc,'Value',0);
+
+% clear table
+table = get(handles.uitable1,'data');
+table = {''};
+set(handles.uitable1,'data',table);
+
+
+% Parameters
+
+i=1;
+table = get(handles.uitable1,'data');
+
+while i < ENgetcount('link')+1
+    table{i,2} = char(ENgetlinkid(i));     % set in table -> Type and ID nodes
+    table{i,1} = char(ENgetlinktype(i));   % column 1 and 2.
+    i=i+1;
+end
+   
+    
+Idparameter{1}=char('Type');
+Idparameter{2}=char('ID');
+columneditTable{1} =  false; % false = 0, %True=1
+columneditTable{2} = false;
+i=1; 
+W=3;
+while i< ENgetcount('link')+1  %for each node, calculate value for species.
+    
+    j=1;
+    t=3;
+    while j <  MSXgetcount('species')+1
+         % i is index for links
+         % j is index for species
+         linkvalue = MSXgetparameter('MSX_LINK', i, j);
+         table{i,t} = linkvalue;
+         j=j+1;
+         t=t+1; % column
+         Idparameter{W} =  MSXgetID(i,'species'); 
+         columneditTable{W} = true;
+    end
+    W=W+1;
+    i=i+1;
+end
+
+set(handles.uitable1,'ColumnName',{char(Idparameter)});
+
+i=1;
+while i <length(columneditTable)+1 %set edit column
+
+    c(i) = logical(columneditTable{i});
+    
+    i=i+1;
+end
+
+    
+set(handles.uitable1,'ColumnEditable',[c]); % false = ok
+                                                     % true = edit column
+                                                     
+set(handles.uitable1,'data',table);
+
+ handles.Idspecies = Idspecies;
+
+% Update handles structure
+guidata(hObject, handles);
+
+% --- Executes when entered data in editable cell(s) in uitable1.
+function uitable1_CellEditCallback(hObject, eventdata, handles)
+% hObject    handle to uitable1 (see GCBO)
+% eventdata  structure with the following fields (see UITABLE)
+%	Indices: row and column indices of the cell(s) edited
+%	PreviousData: previous data for the cell(s) edited
+%	EditData: string(s) entered by the user
+%	NewData: EditData or its converted form set on the Data property. Empty if Data was not changed
+%	Error: error string when failed to convert EditData to appropriate value for Data
+% handles    structure with handles and user data (see GUIDATA)
+
+link = get(handles.linksc,'Value');
+
+node = get(handles.nodesc,'Value');
+
+table = get(handles.uitable1,'data');
+
+row = eventdata.Indices(1); 
+column = eventdata.Indices(2); 
+new = eventdata.NewData;
+previous = eventdata.PreviousData;
+
+c = eventdata.EditData; %EditData
+
+d = str2num(c); % elexgos an einai arithmos ii grammata 
+d = length(d);
+
+
+Idspecies = handles.Idspecies;
+
+s = MSXgetindex('parameter',char(Idspecies(column))); % s is index species. and Idspecie(column) is AS3...columnnames from table
+index = row ; % from table, index for node  = row
+
+
+%LINKS
+if link==1 && d==1 % an den einai grammata sinexise
+       
+   type = char('MSX_LINK');
+   MSXsetparameter(type,index,s,new); %new = new value
+   table{row,s+2} = new ; 
+   set(handles.uitable1,'data',table);
+
+   elseif d==0
+   table{row,s+2} = previous ; 
+   set(handles.uitable1,'data',table);    
+end
+   
+%NODES
+if node==1 && d==1 % an den einai grammata sinexise
+       
+   type = char('MSX_NODE');
+   MSXsetparameter(type,index,s,new); %new = new value
+   table{row,s+2} = new ; 
+   set(handles.uitable1,'data',table);
+
+   elseif d==0
+   table{row,s+2} = previous ; 
+   set(handles.uitable1,'data',table);    
+end
+   
+
+
+% --- Executes on button press in nodesc.
+function nodesc_Callback(hObject, eventdata, handles)
+% hObject    handle to nodesc (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of nodesc
+
+node_Callback(hObject, eventdata, handles);
+
+
+% --- Executes on button press in linksc.
+function linksc_Callback(hObject, eventdata, handles)
+% hObject    handle to linksc (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of linksc
+
+link_Callback(hObject, eventdata, handles);

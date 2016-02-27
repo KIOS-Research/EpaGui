@@ -1,0 +1,57 @@
+[TITLE]
+ AquaRisk Simulator
+
+[OPTIONS]
+RATE_UNITS  DAY
+SOLVER      EUL ;RK5 ;EUL ;ROS2
+TIMESTEP    3600
+RTOL        0.001
+ATOL        0.001
+
+
+[SPECIES]
+BULK    WaterAge    HR   0.01  0.001
+BULK    Chlorine    MG   0.01  0.001  
+BULK    THMs        UG   0.01  0.001  
+BULK    TOC         MG   0.01  0.001
+
+[COEFFICIENTS]
+PARAMETER   Temperature    20 ; Celcius
+PARAMETER   Kw             0.3048 ;   1
+PARAMETER   Y              33.5
+;PARAMETER   Ka             0.02
+;PARAMETER   Kb            0.02 
+
+[TERMS]
+Kf     (1.5826e-4 * RE^0.88 / D) ;/day
+Kb     (1.8e6*exp(-6050/(Temperature+273)))*TOC ;/day
+
+[PIPE]
+RATE        WaterAge        24
+RATE        Chlorine        -Kb*Chlorine - (4/D)*Kw*Kf/(Kw+Kf)*Chlorine ;mg/L
+RATE        TOC             0 
+RATE        THMs            Y*Kb*Chlorine*1000
+
+[TANK]
+RATE        WaterAge        24
+RATE        Chlorine        -Kb*Chlorine 
+RATE        TOC             0 
+RATE        THMs            Y*Kb*Chlorine*1000
+
+[SOURCES]
+;CONC/MASS/FLOW/SETPOINT   <nodeID>      <specieID>     <strength>     (<tseriesID>)
+
+
+[QUALITY]
+;GLOBAL TOC 1 
+[PARAMETERS]
+;PIPE        <pipeID>      <paramID>     <value>
+;TANK        <tankID>      <paramID>     <value>
+
+[REPORT]
+NODES  ALL
+LINKS  ALL
+SPECIE WaterAge YES
+SPECIE Chlorine YES
+SPECIE THMs YES
+SPECIE TOC YES
