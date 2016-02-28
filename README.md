@@ -74,14 +74,39 @@ The EpaGui is comprised of the following parts:1) the menu bar, 2) the input fil
 
 ![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/Help.png)
 
-### MSX 
+### MSX
 
+#### Get Chemical Species
 
+![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/getMsxSpecies.png)
 
+#### Set Sources
 
+![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/setMsxSources.png)
 
+#### Set Reaction Constants
 
+![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/setMsxReactionConstants.png)
 
+#### Set Initial Concentration
+
+![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/setMsxInitialConcentration.png)
+
+#### Set Reaction Parameters
+
+![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/setMsxReactionParameters.png)
+
+#### Simulate Run MSX Results
+
+![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/RunMsxResults.png)
+
+#### MSX Report
+
+![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/reportMsx.png)
+
+#### Save MSX File
+
+![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/saveMsx.png)
 
 
 
