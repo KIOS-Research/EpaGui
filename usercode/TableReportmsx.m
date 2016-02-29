@@ -413,7 +413,7 @@ if (handles.speciesID < spcnt+1 && handles.speciesID>0)
     str = sprintf('  Amount of chemical spesies %s',char(Idspecies));
     title(handles.axes2,str);
     ylabel(handles.axes2,'Quantity');
-    xlabel(handles.axes2,'Time(sec)');
+    xlabel(handles.axes2,'Time(hrs)');
     set(handles.axes2,'xcolor',[0 0 0]);
     set(handles.axes2,'ycolor',[0 0 0]);
 %     if handles.duration
@@ -453,7 +453,7 @@ if (handles.speciesID < spcnt+1 && handles.speciesID>0)
     str = sprintf('Amount of chemical spesies %s',char(Idspecies));
     title(handles.axes2,str);
     ylabel(handles.axes2,'Quantity');
-    xlabel(handles.axes2,'Time(sec)');
+    xlabel(handles.axes2,'Time(hrs)');
     set(handles.axes2,'xcolor',[0 0 0]);
     set(handles.axes2,'ycolor',[0 0 0]);
 %     if handles.duration
