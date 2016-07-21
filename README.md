@@ -1,5 +1,5 @@
 # EpaGui
-EpaGui is a graphical user interface in matlab were created using the Epanet Matlab Class (EpaClass 2.1). 
+EpaGui is a graphical user interface in matlab were created using the Epanet Matlab Toolkit.
 
 
 ![EpaGui](https://github.com/KIOS-Research/EpaGui/blob/master/help/EpaGuiMain.png)
