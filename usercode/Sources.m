@@ -241,7 +241,7 @@ d = str2num(c); % elexgos an einai arithmos ii grammata
 d = length(d);
 node = get(handles.listbox2,'Value'); %anaktisi minimatos NODE ID 'A'
 pat = table{3,column};
-patindex = handles.ep.B.getMsxPatternsIndex(pat);
+patindex = handles.ep.B.getMSXPatternsIndex(pat);
 
 %Type Source
 if d==0 && row==1
@@ -267,7 +267,7 @@ if d==0 && row==1
     end
     
     if code~=-1 
-        handles.ep.B.setMsxSources(node,column,code,level,patindex);clc;
+        handles.ep.B.setMSXSources(node,column,code,level,patindex);clc;
         set(handles.uitable1,'data',table);
     else
         table{row,column}=previous;
@@ -305,7 +305,7 @@ if row == 2 && d==1 %gia na allazoume tis ipolipes stiles pou einai arithmoi.
     else
         level = new;
     end    
-    handles.ep.B.setMsxSources(node,column,code,level,patindex);clc; % set type =0
+    handles.ep.B.setMSXSources(node,column,code,level,patindex);clc; % set type =0
     
 elseif row==2 && d==0
     table{row,column} = previous;   
@@ -314,7 +314,7 @@ set(handles.uitable1,'data',table);
 
 if row==3    
     table{row,column}= char(new);
-    pat = handles.ep.B.getMsxPatternsIndex(new);
+    pat = handles.ep.B.getMSXPatternsIndex(new);
     if table{2,column}==0 % den prepei na einai miden
         level=1;
         table{2,column}=level;
@@ -322,7 +322,7 @@ if row==3
     if pat~=0
         table{row,column} = char(new);
         level = table{2,column};
-        handles.ep.B.setMsxSources(node,column,code,level,pat);clc;%char(type)--code
+        handles.ep.B.setMSXSources(node,column,code,level,pat);clc;%char(type)--code
         set(handles.uitable1,'data',table); 
     else
         uiwait(msgbox('Reference made to an undefined object ID.','Modal'));
@@ -359,17 +359,17 @@ columneditTable{1} =  false; % false = 0, %True=1
 columneditTable{2} = false;
 Idspecies{1}='';
 
-spcnt=handles.ep.B.getMsxSpeciesCount;
-type=handles.ep.B.getMsxSourceType;
-level=handles.ep.B.getMsxSourceLevel;
-pat=handles.ep.B.getMsxSourcePatternIndex;
-idspecies=handles.ep.B.getMsxSpeciesNameID;
-units=handles.ep.B.getMsxSpeciesUnits;
+spcnt=handles.ep.B.getMSXSpeciesCount;
+type=handles.ep.B.getMSXSourceType;
+level=handles.ep.B.getMSXSourceLevel;
+pat=handles.ep.B.getMSXSourcePatternIndex;
+idspecies=handles.ep.B.getMSXSpeciesNameID;
+units=handles.ep.B.getMSXSpeciesUnits;
 for i=1:spcnt
    table{1,i} = type{index}{i};                   
    table{2,i} = level{index}(i);
    if pat{index}(i)~=0
-       patid=handles.ep.B.getMsxPatternsNameID{pat{index}(i)};
+       patid=handles.ep.B.getMSXPatternsNameID{pat{index}(i)};
    else
        patid='None Pattern';
    end

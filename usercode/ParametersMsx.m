@@ -124,12 +124,12 @@ Idspecies{1} = char('Type');
 Idspecies{2} = char('ID');
 columneditTable{1} =  false; % false = 0, %True=1
 columneditTable{2} = false;
-param=handles.ep.B.getMsxParametersTanksValue;%nodeindex speciesindex
-idsp=handles.ep.B.getMsxParametersNameID;
+param=handles.ep.B.getMSXParametersTanksValue;%nodeindex speciesindex
+idsp=handles.ep.B.getMSXParametersNameID;
 W=3;u=1;
 for i=ndcnt  %for each node, calculate value for species.
     t=3;
-    for j=1:handles.ep.B.getMsxParametersCount
+    for j=1:handles.ep.B.getMSXParametersCount
        table{u,t} = param{i}(j); 
        t=t+1; % column
        columneditTable{W} = true;
@@ -176,12 +176,12 @@ Idspecies{1} = char('Type');
 Idspecies{2} = char('ID');
 columneditTable{1} =  false; % false = 0, %True=1
 columneditTable{2} = false;
-param=handles.ep.B.getMsxParametersPipesValue;%linkindex speciesindex
-idsp=handles.ep.B.getMsxParametersNameID;
+param=handles.ep.B.getMSXParametersPipesValue;%linkindex speciesindex
+idsp=handles.ep.B.getMSXParametersNameID;
 W=3;
 for i=1:lcnt  %for each node, calculate value for species.
     t=3;
-    for j=1:handles.ep.B.getMsxParametersCount
+    for j=1:handles.ep.B.getMSXParametersCount
        table{i,t} = param{i}(j); 
        t=t+1; % column
        columneditTable{W} = true;
@@ -231,10 +231,10 @@ index = row ; % from table, index for node  = row
 %NODES
 pindex=column-2;
 tankind=handles.ep.B.getNodeTankIndex;
-values=handles.ep.B.getMsxParametersTanksValue;
+values=handles.ep.B.getMSXParametersTanksValue;
 if d==1 % an den einai grammata sinexise
     values{tankind(row)}(pindex)=new;%
-    handles.ep.B.setMsxParametersTanksValue(tankind(row),pindex,values{tankind(row)}(pindex))  
+    handles.ep.B.setMSXParametersTanksValue(tankind(row),pindex,values{tankind(row)}(pindex))  
     table{row,column} = new ; 
     set(handles.uitable1,'data',table);
     return;
@@ -266,10 +266,10 @@ index = row ; % from table, index for node  = row
 
 %LINKS
 spindex=column-2;
-values=handles.ep.B.getMsxParametersPipesValue;
+values=handles.ep.B.getMSXParametersPipesValue;
 if d==1 % an den einai grammata sinexise
     values{index}(spindex)=new;%
-    handles.ep.B.setMsxParametersPipesValue(index,values{index})  
+    handles.ep.B.setMSXParametersPipesValue(index,values{index})  
     table{row,column} = new ; 
     set(handles.uitable2,'data',table);
     return;

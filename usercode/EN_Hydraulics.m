@@ -185,7 +185,7 @@ if eventdata.Indices(1)>2
         handles.d(eventdata.Indices(1),eventdata.Indices(2))={eventdata.PreviousData};
     elseif eventdata.Indices(1)==4    
         handles.ep.B.setOptionsAccuracyValue(eventdata.NewData);
-        if handles.ep.B.errcode==0
+        if handles.ep.B.Errcode==0
             handles.d(4,2)={eventdata.NewData};
         else
             handles.d(4,2)={eventdata.PreviousData};

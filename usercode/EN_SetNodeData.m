@@ -426,7 +426,7 @@ end
 
 if demandpatterncount    
     nddemandpattern=handles.ep.B.getPatternNameID;
-    node.nddemandpatternIndex=handles.ep.B.getNodeDemandPatternIndex;  
+    node.nddemandpatternIndex=handles.ep.B.getNodeDemandPatternIndex{1};  
     for i=1:ndcnt
         if node.nddemandpatternIndex(i)
             table(i,cp) = {nddemandpattern{node.nddemandpatternIndex(i)}};
@@ -768,7 +768,7 @@ if sourcepatcount
             uiwait(msgbox('Invalid pattern.Set None Pattern. See Pattern Data.','Error','modal'));
             table{row,col}='None Pattern';
         end
-        handles.ep.B.setNodeSourcePatternIndex(new);
+        handles.ep.B.setNodeSourcePatternIndex(row,new);
         set(handles.uitable1,'data',table);
     end
 end
@@ -1034,7 +1034,7 @@ end
 
 if colstype~=0   
     for i=1:ndcnt
-        if ~strcmp(node.ndsourcetype{i},'NaN')
+        if ~isnan(node.ndsourcetype{i})
             handles.ep.B.setNodeSourceType(i,node.ndsourcetype{i});
         end
     end

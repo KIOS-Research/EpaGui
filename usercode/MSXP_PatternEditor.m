@@ -74,18 +74,18 @@ set(handles.figure1,'name','Pattern Editor');
 
 index = handles.Getpatternindex;
 
-len = handles.ep.B.getMsxPatternsLengths(index);
+len = handles.ep.B.getMSXPatternsLengths(index);
 
 if len==24 || len==12
 else
-    handles.ep.B.setMsxPattern(index,ones(1,24));
+    handles.ep.B.setMSXPattern(index,ones(1,24));
     len=24;
 end
 
 handles.len = len;
 
 
-idpattern = handles.ep.B.getMsxPatternsNameID(index);
+idpattern = handles.ep.B.getMSXPatternsNameID(index);
 set(handles.idtext,'String',idpattern);
 
 
@@ -93,7 +93,7 @@ table = get(handles.uitable1,'data');
 
 %Multiplier
 for period=1:len;
-    t = handles.ep.B.getMsxPatternValue(index,period); 
+    t = handles.ep.B.getMSXPatternValue(index,period); 
     table{2,period}=sprintf('%.1f',t);
 end       
     
@@ -243,11 +243,11 @@ end
 
 Getpatternindex = handles.Getpatternindex;
 
-len = handles.ep.B.getMsxPatternsLengths(Getpatternindex);
+len = handles.ep.B.getMSXPatternsLengths(Getpatternindex);
 
 if row==2 && d==1 && column < len+1
     
-    handles.ep.B.setMsxPatternValue(Getpatternindex,column,str2num(new))
+    handles.ep.B.setMSXPatternValue(Getpatternindex,column,str2num(new))
     if isnumeric(new)
         new = str2num(new);
     end
@@ -266,7 +266,7 @@ table = get(handles.uitable1,'data');
 
 index = Getpatternindex;
 
-len = handles.ep.B.getMsxPatternsLengths(index);
+len = handles.ep.B.getMSXPatternsLengths(index);
 
 % for i=1:len
 %     table{2,i} = 0;
@@ -276,17 +276,17 @@ len = handles.ep.B.getMsxPatternsLengths(index);
 for i=1:len
     if length(table{2,i})==0
         table{2,i}=0;
-        handles.ep.B.setMsxPatternValue(Getpatternindex,i,(table{2,i}))% to 2 einai
+        handles.ep.B.setMSXPatternValue(Getpatternindex,i,(table{2,i}))% to 2 einai
     else
-        handles.ep.B.setMsxPatternValue(Getpatternindex,i,str2num(table{2,i}))% to 2 einai
+        handles.ep.B.setMSXPatternValue(Getpatternindex,i,str2num(table{2,i}))% to 2 einai
     end
 end
 set(handles.uitable1,'data',table);
-idpattern = handles.ep.B.getMsxPatternsNameID(index);
+idpattern = handles.ep.B.getMSXPatternsNameID(index);
 set(handles.idtext,'String',idpattern);
 %Multiplier
 for period=1:len
-    t = handles.ep.B.getMsxPatternValue(index,period); 
+    t = handles.ep.B.getMSXPatternValue(index,period); 
     table{2,period}=sprintf('%.1f',t);
 end       
 set(handles.uitable1,'data',table);
@@ -366,16 +366,16 @@ Getpatternindex = handles.Getpatternindex;
 
 len = handles.len;
 
-handles.ep.B.setMsxPattern(Getpatternindex,[1:len]);
+handles.ep.B.setMSXPattern(Getpatternindex,[1:len]);
 
 
 % vazw tis times tou pinaka sto pattern.
 for i=1:len
     if length(previous{2,i})==0
         previous{2,i}=0;
-        handles.ep.B.setMsxPatternValue(Getpatternindex,i,(previous{2,i}))% to 2 einai
+        handles.ep.B.setMSXPatternValue(Getpatternindex,i,(previous{2,i}))% to 2 einai
     else
-        handles.ep.B.setMsxPatternValue(Getpatternindex,i,str2num(previous{2,i}))% to 2 einai
+        handles.ep.B.setMSXPatternValue(Getpatternindex,i,str2num(previous{2,i}))% to 2 einai
     end
 end
 
@@ -407,7 +407,7 @@ t=1;
 %Demand pattern
 while t~=26
     while (r<25)&&(z<a)
-        y(r)=handles.ep.B.getMsxPatternValue(index,p);
+        y(r)=handles.ep.B.getMSXPatternValue(index,p);
         z=z+1;
         r=r+1;
     end

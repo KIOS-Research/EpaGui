@@ -59,7 +59,7 @@ handles.ep=varargin{1};
 
 % UIWAIT makes SaveMsxFile wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-handles.path=[fileparts(handles.ep.B.MsxTempFile),'\'];
+handles.path=[fileparts(handles.ep.B.MSXTempFile),'\'];
 handles.namefile='';
 set(handles.edit1,'String','');
 set(handles.dir,'String',handles.path);
@@ -120,7 +120,7 @@ if length(Sentences)==1
         if isempty(handles.namefile)
             name =strcat(name,'.msx');
             savename=[handles.path,name];
-            [yes] = replace(char('\*.msx'),name,handles.ep.B.pathfile);
+            [yes] = replace(char('\*.msx'),name,'');
         else
             if isempty(regexp(name,'.msx','match'))
                 name =strcat(name,'.msx');
@@ -130,11 +130,11 @@ if length(Sentences)==1
         end
        warning on;
        if (yes==1) % replcase
-            handles.ep.B.MsxSaveFile(savename)
+            handles.ep.B.saveMSXFile(savename)
             open(savename)
             set(handles.figure1,'visible','off');
        elseif (yes==2)  
-            handles.ep.B.MsxSaveFile(savename)
+            handles.ep.B.saveMSXFile(savename)
             open(savename)
             set(handles.figure1,'visible','off');
        end

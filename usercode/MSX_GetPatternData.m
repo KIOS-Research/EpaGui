@@ -61,8 +61,8 @@ handles.ep=varargin{1};
 % uiwait(handles.figure1);
 set(handles.figure1,'name','');
 
-handles.patcnt=handles.ep.B.getMsxPatternsCount;
-ids=handles.ep.B.getMsxPatternsNameID;
+handles.patcnt=handles.ep.B.getMSXPatternsCount;
+ids=handles.ep.B.getMSXPatternsNameID;
 if handles.patcnt~=0
     for i=1:handles.patcnt
         handles.id{i} = ids{i};
@@ -168,8 +168,8 @@ for i=1:length(list)
 end
 
 if sum(v)~=1
-    handles.patcnt=handles.ep.B.getMsxPatternsCount;
-    ids=handles.ep.B.getMsxPatternsNameID;
+    handles.patcnt=handles.ep.B.getMSXPatternsCount;
+    ids=handles.ep.B.getMSXPatternsNameID;
     if handles.patcnt~=0
         for i=1:handles.patcnt
             handles.id{i} = ids{i};
@@ -183,7 +183,7 @@ if sum(v)~=1
     new_id= get(handles.edit1,'String');
     new = char(new_id);
     new = cellstr(new);
-    id = handles.ep.B.MsxAddPattern(char(new));
+    id = handles.ep.B.addMSXPattern(char(new));
 
     if char(id)~=0
         listpattern = [previousList;{new_id}];

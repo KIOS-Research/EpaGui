@@ -59,7 +59,7 @@ handles.ep=varargin{1};
 
 % UIWAIT makes EN_Saveinputfile wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
-handles.path=[fileparts(handles.ep.B.Bintempfile),'\'];
+handles.path=[fileparts(handles.ep.B.BinTempfile),'\'];
 handles.namefile='';
 set(handles.edit1,'String','');
 set(handles.dir,'String',handles.path);
@@ -120,7 +120,7 @@ if length(Sentences)==1
         if isempty(handles.namefile)
             name =strcat(name,'.inp');
             savename=[handles.path,name];
-            [yes] = replace(char('\*.inp'),name,handles.ep.B.pathfile);
+            [yes] = replace(char('\*.inp'),name,'');
         else
             if isempty(regexp(name,'.inp','match'))
                 name =strcat(name,'.inp');
@@ -130,11 +130,11 @@ if length(Sentences)==1
         end
        warning on;
        if (yes==1) % replcase
-            handles.ep.B.saveInputFile(savename)
+            handles.ep.B.saveInputFile(savename);
             open(savename)
             set(handles.figure1,'visible','off');
        elseif (yes==2)  
-            handles.ep.B.saveInputFile(savename)
+            handles.ep.B.saveInputFile(savename);
             open(savename)
             set(handles.figure1,'visible','off');
         end
@@ -157,7 +157,7 @@ function dir_Callback(hObject, eventdata, handles)
 
 % Hints: contents = cellstr(get(hObject,'String')) returns dir contents as cell array
 %        contents{get(hObject,'Value')} returns selected item from dir
-[name,PathFile] = uiputfile([handles.ep.B.pathfile,'*.inp']);
+[name,PathFile] = uiputfile(['','*.inp']);
 if PathFile
     handles.path=PathFile;
     handles.namefile=name;

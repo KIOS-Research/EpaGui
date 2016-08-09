@@ -408,7 +408,7 @@ if handles.ep.B.getControlRulesCount || get(handles.addcontrol,'Value')
         
         previouslist=cellstr(get(handles.listbox1,'String'));
         previouslist(valuelist)=cellstr('');
-        handles.ep.B.saveInputFile(handles.ep.B.Bintempfile,1);
+        handles.ep.B.saveInputFile(handles.ep.B.BinTempfile,1);
         cpp=handles.ep.B.getControls;
         pp=handles.ep.B.getBinControlsInfo;
         handles.ep.B.removeBinControlLinkID(linkid);
@@ -431,7 +431,7 @@ if handles.ep.B.getControlRulesCount || get(handles.addcontrol,'Value')
                         % LINK x status AT CLOCKTIME c AM
                         handles.ep.B.addBinControl(char(handles.ep.B.getLinkNameID(cpp{i}{3})),stat,num2str(cpp{i}{6}/3600),'AM');
                     end
-                    if handles.ep.B.errcode
+                    if handles.ep.B.Errcode
                         uiwait(msgbox('Control contains illegal numeric value.','Modal'));return;
                     end
                 end

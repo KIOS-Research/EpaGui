@@ -60,7 +60,7 @@ handles.count=0;
 handles.open = 0;
 handles.ep=varargin{1};
 guidata(hObject, handles);
-[~,inputfile]=fileparts(handles.ep.B.inputfile);
+[~,inputfile]=fileparts(handles.ep.B.InputFile);
 descpr='This example can be used to create fire hydrant evaluation curve, because the water pressure depends also ';
 descpr=[descpr,'from fire hydrants. Through ',inputfile,'.inp network we simulate, for any maximum uncertainty (%), a numerous '];
 descpr=[descpr,'Monde Carlo Simulations (N) for a specific period in order to find the lowest possible pressures in all nodes'];

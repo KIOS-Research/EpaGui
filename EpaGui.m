@@ -164,29 +164,29 @@ function loadinpfile_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
     if sum(strcmp(fields(handles),'B'))
-        if libisloaded(handles.B.libepanet)
-            if exist(handles.B.Bintempfile)==2
-                [~,f]=fileparts(handles.B.Bintempfile);
+        if libisloaded(handles.B.LibEPANET)
+            if exist(handles.B.BinTempfile)==2
+                [~,f]=fileparts(handles.B.BinTempfile);
                 handles.B.saveInputFile([pwd,'\results\',f,'.inp'])
                 handles.B.unload;warning off;
                 if libisloaded('epanetmsx')
-                    handles.ep.B.MsxUnload;
+                    handles.ep.B.unloadMSX;
                 end
-                delete(handles.B.Bintempfile);warning on;
+                delete(handles.B.BinTempfile);warning on;
             end
 
-            if exist([handles.B.Bintempfile(1:end-4),'.bin'])==2
-                delete([handles.B.Bintempfile(1:end-4),'.bin']);
+            if exist([handles.B.BinTempfile(1:end-4),'.bin'])==2
+                delete([handles.B.BinTempfile(1:end-4),'.bin']);
             end
-            if exist([handles.B.Bintempfile(1:end-4),'.txt'])==2
-                delete([handles.B.Bintempfile(1:end-4),'.txt']);
+            if exist([handles.B.BinTempfile(1:end-4),'.txt'])==2
+                delete([handles.B.BinTempfile(1:end-4),'.txt']);
             end
-            [p,f]=fileparts(handles.B.inputfile);
+            [p,f]=fileparts(handles.B.InputFile);
             if exist([p,'/',f,'.txt'])==2
                 delete([p,'/',f,'.txt']);
             end
-            if exist(handles.B.MsxTempFile)==2
-                delete(handles.B.MsxTempFile);
+            if exist(handles.B.MSXTempFile)==2
+                delete(handles.B.MSXTempFile);
             end
         end
     end   
@@ -221,13 +221,13 @@ function loadinpfile_Callback(hObject, eventdata, handles)
         % Load Input File
         handles.B=epanet([PathFile,InputFile]); %clc;
         handles.ep.msg=get(handles.LoadText,'String');
-        if handles.B.errcode>0
+        if handles.B.Errcode>0
             handles.ep.msg = [handles.ep.msg; {sprintf('>>Could not open network ''%s'', please insert the correct filename(*.inp).\n',InputFile)}]; 
             set(handles.LoadText,'Value',length(handles.ep.msg)); 
             set(handles.LoadText,'String',handles.ep.msg);
             set(handles.loadinpfile,'str','Load Input File','backg',col);
             return;
-        elseif handles.B.errcode==-1
+        elseif handles.B.Errcode==-1
             [~,lib]=fileparts(libepanet);
             handles.ep.msg = [handles.ep.msg; {['>>DLL "', lib, '" is not a valid win application.']}];
             set(handles.LoadText,'Value',length(handles.ep.msg)); 
@@ -354,13 +354,13 @@ function loadinpfile_Callback(hObject, eventdata, handles)
         set(handles.loadinpfile,'str','Load Input File','backg',col)  % Now reset the button features.
     else
         if sum(strcmp(fields(handles),'B'))
-            loadlibrary([handles.B.libepanetpath,handles.B.libepanet],[handles.B.libepanetpath,handles.B.libepanet,'.h'])
-            [~,f]=fileparts(handles.B.Bintempfile);
-            movefile([pwd,'\results\',f,'.inp'],handles.B.Bintempfile)
-            handles.B.LoadFile(handles.B.Bintempfile);
+            loadlibrary([handles.B.LibEPANETpath,handles.B.LibEPANET],[handles.B.LibEPANETpath,handles.B.LibEPANET,'.h'])
+            [~,f]=fileparts(handles.B.BinTempfile);
+            movefile([pwd,'\results\',f,'.inp'],handles.B.BinTempfile)
+            handles.B.loadEPANETFile(handles.B.BinTempfile);
             if strcmp(get(handles.msxepanet,'enable'),'on')
                 loadlibrary([handles.B.MsxlibepanetPath,handles.B.Msxlibepanet],[handles.B.MsxlibepanetPath,handles.B.Msxlibepanet,'.h'])
-                handles.B.msx(handles.B.MsxFile);
+                handles.B.loadMSXFile(handles.B.MsxFile);
             end
         end
     end
@@ -544,13 +544,13 @@ function SaveNetwork_Callback(hObject, eventdata, handles)
 
     try
         f=getframe(handles.figure1);
-        imwrite(f.cdata,[handles.ep.B.inputfile(1:end-4),'.bmp'],'bmp');
+        imwrite(f.cdata,[handles.ep.B.InputFile(1:end-4),'.bmp'],'bmp');
 
         figure(1);
-        imshow([handles.ep.B.inputfile(1:end-4),'.bmp']);
+        imshow([handles.ep.B.InputFile(1:end-4),'.bmp']);
 
         % save to pdf and bmp
-        print(gcf,'-dpdf',handles.ep.B.inputfile(1:end-4),sprintf('-r%d',150));
+        print(gcf,'-dpdf',handles.ep.B.InputFile(1:end-4),sprintf('-r%d',150));
     catch e
     end
     % graphs
@@ -790,7 +790,7 @@ if button==1
     sfilesexist = dir('s*'); 
     if (~isempty(sfilesexist)), delete('s*'), end;
     if sum(strcmp(fields(handles),'B'))
-        if libisloaded(handles.B.libepanet)
+        if libisloaded(handles.B.LibEPANET)
             handles.B.unload;
         end
     end
@@ -894,7 +894,7 @@ if button==1
     sfilesexist = dir('s*'); 
     if (~isempty(sfilesexist)), delete('s*'), end;
     if sum(strcmp(fields(handles),'B'))
-        if libisloaded(handles.B.libepanet)
+        if libisloaded(handles.B.LibEPANET)
             handles.B.unload;
         end
     end
@@ -917,11 +917,11 @@ function loadmsxfile_Callback(hObject, eventdata, handles)
 
     if sum(strcmp(fields(handles),'B'))
         if libisloaded('epanetmsx')
-            if exist(handles.B.MsxTempFile)==2
-                [~,f]=fileparts(handles.B.MsxTempFile);
-                handles.B.MsxSaveFile([pwd,'\results\',f,'.msx'])
-                handles.B.MsxUnload;
-                delete(handles.B.MsxTempFile);
+            if exist(handles.B.MSXTempFile)==2
+                [~,f]=fileparts(handles.B.MSXTempFile);
+                handles.B.saveMSXFile([pwd,'\results\',f,'.msx'])
+                handles.B.unloadMSX;
+                delete(handles.B.MSXTempFile);
             end
         end
     end
@@ -939,7 +939,7 @@ if path
     end
     if name~=0
         try
-            handles.ep.B.msx([path,name]);
+            handles.ep.B.loadMSXFile([path,name]);
         catch e
             errcode=501;% errcode
         end
@@ -965,9 +965,9 @@ if path
 else
     if sum(strcmp(fields(handles),'B')) 
         loadlibrary([handles.B.MsxlibepanetPath,handles.B.Msxlibepanet],[handles.B.MsxlibepanetPath,[handles.B.Msxlibepanet,'.h']]);
-        [~,f]=fileparts(handles.B.MsxTempFile);
-        copyfile([pwd,'\results\',f,'.msx'],handles.B.MsxTempFile)
-        handles.B.msx([pwd,'\networks\',f(1:end-5),'.msx']);
+        [~,f]=fileparts(handles.B.MSXTempFile);
+        copyfile([pwd,'\results\',f,'.msx'],handles.B.MSXTempFile)
+        handles.B.loadMSXFile([pwd,'\networks\',f(1:end-5),'.msx']);
     end
 end
 
@@ -1060,7 +1060,7 @@ handles.ep.msg=[handles.ep.msg;{'>>Select MSX Reaction Constant.'}];
 set(handles.ep.LoadText,'Value',length(handles.ep.msg)); 
 set(handles.ep.LoadText,'String',handles.ep.msg);
 
-if handles.ep.B.getMsxConstantsCount
+if handles.ep.B.getMSXConstantsCount
     Constants(handles.ep)
 else
     uiwait(msgbox('             No constants.','Modal'));
@@ -1122,22 +1122,22 @@ if button==1
 end
 
 function [statusfile] = makebatfile(handles)
-    binfile=[handles.ep.B.Bintempfile(1:end-4),'.bin'];
+    binfile=[handles.ep.B.BinTempfile(1:end-4),'.bin'];
     if exist(binfile)==2, fclose all; delete(binfile); end
     if strcmp(computer('arch'),'win64')
             folder='64bit';
-        r = sprintf('%s\\%s\\epanet2d.exe %s %s %s',pwd,folder,handles.ep.B.Bintempfile,[handles.ep.B.Bintempfile(1:end-4),'.txt'],binfile);
+        r = sprintf('%s\\%s\\epanet2d.exe %s %s %s',pwd,folder,handles.ep.B.BinTempfile,[handles.ep.B.BinTempfile(1:end-4),'.txt'],binfile);
     elseif strcmp(computer('arch'),'win32')
             folder='32bit';
-        r = sprintf('%s\\%s\\epanet2d.exe %s %s %s',pwd,folder,handles.ep.B.Bintempfile,[handles.ep.B.Bintempfile(1:end-4),'.txt'],binfile);
+        r = sprintf('%s\\%s\\epanet2d.exe %s %s %s',pwd,folder,handles.ep.B.BinTempfile,[handles.ep.B.BinTempfile(1:end-4),'.txt'],binfile);
     else
-        r = sprintf('./runcode2 %s %s %s',handles.ep.B.Bintempfile,[handles.ep.B.Bintempfile(1:end-4),'.txt'],binfile);
+        r = sprintf('./runcode2 %s %s %s',handles.ep.B.BinTempfile,[handles.ep.B.BinTempfile(1:end-4),'.txt'],binfile);
     end
-    f=fopen([handles.ep.B.pathfile,'Simulate.bat'],'w');
+    f=fopen(['Simulate.bat'],'w');
     try fprintf(f,'%s \n',r); fclose(f); catch; end
-    system([handles.ep.B.pathfile,'Simulate.bat']);
-    delete([handles.ep.B.pathfile,'Simulate.bat']);
-    statusfile=[handles.ep.B.Bintempfile(1:end-4),'.txt'];
+    system(['Simulate.bat']);
+    delete(['Simulate.bat']);
+    statusfile=[handles.ep.B.BinTempfile(1:end-4),'.txt'];
 
 % --------------------------------------------------------------------
 function table_Callback(hObject, eventdata, handles)
@@ -1494,7 +1494,7 @@ handles.ep.msg=[handles.ep.msg;{'>>Select MSX Reaction Parameter.'}];
 set(handles.ep.LoadText,'Value',length(handles.ep.msg)); 
 set(handles.ep.LoadText,'String',handles.ep.msg);
 
-if handles.ep.B.getMsxParametersCount
+if handles.ep.B.getMSXParametersCount
     ParametersMsx(handles.ep);  
 else
     uiwait(msgbox('             No parameters.','Modal'));
@@ -1536,10 +1536,10 @@ if button==1
     elseif strcmp(computer('arch'),'win64')
         folder='64bit';
     end
-    r = sprintf('%s\\%s\\epanetmsx.exe %s %s %s',pwd,folder,handles.ep.B.inputfile,handles.ep.B.MsxTempFile,[handles.ep.B.MsxTempFile(1:end-4),'.txt']);
+    r = sprintf('%s\\%s\\epanetmsx.exe %s %s %s',pwd,folder,handles.ep.B.InputFile,handles.ep.B.MSXTempFile,[handles.ep.B.MSXTempFile(1:end-4),'.txt']);
     fprintf(fid,'%s \n',r);fclose all;
     !ReportMsx.bat
-    open([handles.ep.B.MsxTempFile(1:end-4),'.txt'])
+    open([handles.ep.B.MSXTempFile(1:end-4),'.txt'])
     delete('ReportMsx.bat');
 end
 
@@ -2117,12 +2117,12 @@ function msxrun_Callback(hObject, eventdata, handles)
 h = waitbar(0,'Please wait...');
 
 warning off;
-handles.ep.B.saveInputFile(handles.ep.B.Bintempfile);
-handles.ep.B.LoadFile(handles.ep.B.Bintempfile);
+handles.ep.B.saveInputFile(handles.ep.B.BinTempfile);
+handles.ep.B.loadEPANETFile(handles.ep.B.BinTempfile);
 
-handles.ep.resMsxNode=handles.ep.B.getMsxComputedQualityNode;
+handles.ep.resMsxNode=handles.ep.B.getMSXComputedQualityNode;
 waitbar(50/100,h);
-handles.ep.resMsxLink=handles.ep.B.getMsxComputedQualityLink;
+handles.ep.resMsxLink=handles.ep.B.getMSXComputedQualityLink;
 warning on;
 waitbar(1,h);
 close(h);

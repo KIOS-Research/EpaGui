@@ -58,9 +58,9 @@ handles.msg=0;
 handles.setformula = 0;
 handles.ep=varargin{1};
 
-spind=handles.ep.B.getMsxSpeciesCount;
-idspecies=handles.ep.B.getMsxSpeciesNameID;
-units=handles.ep.B.getMsxSpeciesUnits;
+spind=handles.ep.B.getMSXSpeciesCount;
+idspecies=handles.ep.B.getMSXSpeciesNameID;
+units=handles.ep.B.getMSXSpeciesUnits;
 u=2;
 for i=1:spind       
    sp{u}=[char(idspecies{i}),' (',char(units{i}),')'];
@@ -389,7 +389,7 @@ function back(hObject, eventdata, handles,res)
 set(handles.LoadingAxes,'Visible','on');
 pause(0.01);
 index=get(handles.listbox3,'Value');    
-spcnt=handles.ep.B.getMsxSpeciesCount;
+spcnt=handles.ep.B.getMSXSpeciesCount;
 handles.speciesID=handles.speciesID-1;
 if handles.speciesID==-1 || handles.speciesID==0
     handles.speciesID=spcnt;
@@ -408,8 +408,8 @@ if (handles.speciesID < spcnt+1 && handles.speciesID>0)
 
     axes(handles.axes2);
 %     (T(find(mod(T,timestep)==0)))/timestep,x(find(mod(T,timestep)==0)
-    plot(res.Time(find(mod(res.Time,handles.ep.B.getMsxTimeStep)==0))/3600,res.Quality{index}{handles.speciesID}((find(mod(res.Time,handles.ep.B.getMsxTimeStep)==0))),'r');
-    Idspecies = handles.ep.B.getMsxSpeciesNameID(handles.speciesID);
+    plot(res.Time(find(mod(res.Time,handles.ep.B.getMSXTimeStep)==0))/3600,res.Quality{index}{handles.speciesID}((find(mod(res.Time,handles.ep.B.getMSXTimeStep)==0))),'r');
+    Idspecies = handles.ep.B.getMSXSpeciesNameID(handles.speciesID);
     str = sprintf('  Amount of chemical spesies %s',char(Idspecies));
     title(handles.axes2,str);
     ylabel(handles.axes2,'Quantity');
@@ -430,7 +430,7 @@ guidata(hObject, handles);
 
 function next(hObject, eventdata, handles, res)
 index=get(handles.listbox3,'Value');    
-spcnt=handles.ep.B.getMsxSpeciesCount;
+spcnt=handles.ep.B.getMSXSpeciesCount;
 
 handles.speciesID=handles.speciesID+1;
 if handles.speciesID==-1 || handles.speciesID==spcnt+1
@@ -448,8 +448,8 @@ if (handles.speciesID < spcnt+1 && handles.speciesID>0)
     end        
 
     axes(handles.axes2);
-    plot(res.Time(find(mod(res.Time,handles.ep.B.getMsxTimeStep)==0))/3600,res.Quality{index}{handles.speciesID}((find(mod(res.Time,handles.ep.B.getMsxTimeStep)==0))),'r');
-    Idspecies = handles.ep.B.getMsxSpeciesNameID(handles.speciesID);
+    plot(res.Time(find(mod(res.Time,handles.ep.B.getMSXTimeStep)==0))/3600,res.Quality{index}{handles.speciesID}((find(mod(res.Time,handles.ep.B.getMSXTimeStep)==0))),'r');
+    Idspecies = handles.ep.B.getMSXSpeciesNameID(handles.speciesID);
     str = sprintf('Amount of chemical spesies %s',char(Idspecies));
     title(handles.axes2,str);
     ylabel(handles.axes2,'Quantity');
@@ -478,19 +478,20 @@ if (handles.setformula==0)
     FORMULES{4}='Pipes:';
     FORMULES{2}='..................................';
     FORMULES{3}='';
-    for i=4:length(handles.ep.B.getMsxEquationsPipes)
-        FORMULES{i}=handles.ep.B.getMsxEquationsPipes{i};
+    for i=4:length(handles.ep.B.getMSXEquationsPipes)
+        FORMULES{i}=handles.ep.B.getMSXEquationsPipes{i};
     end
+    if isempty(i); i=4; end
     FORMULES{i}='';
     FORMULES{i+1}='Tanks:';
     u=i+2;
-    for i=1:length(handles.ep.B.getMsxEquationsTanks)
-        FORMULES{u}=handles.ep.B.getMsxEquationsTanks{i};u=u+1;
+    for i=1:length(handles.ep.B.getMSXEquationsTanks)
+        FORMULES{u}=handles.ep.B.getMSXEquationsTanks{i};u=u+1;
     end
     FORMULES{u}='';u=u+1;
     FORMULES{u}='Terms:';u=u+1;
-    for i=1:length(handles.ep.B.getMsxEquationsTerms)
-        FORMULES{u}=handles.ep.B.getMsxEquationsTerms{i};u=u+1;
+    for i=1:length(handles.ep.B.getMSXEquationsTerms)
+        FORMULES{u}=handles.ep.B.getMSXEquationsTerms{i};u=u+1;
     end
     handles.setformula = 1;
     % Update handles structure
@@ -571,17 +572,17 @@ Idspecies{1}=char('Time (sec)');
 %     Retrieves a chemical species concentration at a given 
 %     node or the average concentration along a link at the 
 %     current simulation time step. 
-spcnt=handles.ep.B.getMsxSpeciesCount;
+spcnt=handles.ep.B.getMSXSpeciesCount;
 
 % handles.ep.B.setTimeSimulationDuration(3600*duration_);
-% handles.ep.B.saveInputFile(handles.ep.B.Bintempfile);
-% handles.ep.B.LoadFile(handles.ep.B.Bintempfile);
-% handles.ep.B.LoadFile(handles.ep.B.Bintempfile);
+% handles.ep.B.saveInputFile(handles.ep.B.BinTempfile);
+% handles.ep.B.loadEPANETFile(handles.ep.B.BinTempfile);
+% handles.ep.B.loadEPANETFile(handles.ep.B.BinTempfile);
 if valuelink==1 
-%     res=handles.ep.B.getMsxComputedQualityLink(value,handles.ep.B.getMsxSpeciesIndex);
+%     res=handles.ep.B.getMSXComputedQualityLink(value,handles.ep.B.getMSXSpeciesIndex);
     res=handles.ep.resMsxLink;
 elseif valuenode==1
-%     res=handles.ep.B.getMsxComputedQualityNode(value,handles.ep.B.getMsxSpeciesIndex);
+%     res=handles.ep.B.getMSXComputedQualityNode(value,handles.ep.B.getMSXSpeciesIndex);
     res=handles.ep.resMsxNode;
 end
 sp=1;
@@ -661,7 +662,16 @@ function constants_Callback(hObject, eventdata, handles)
 % hObject    handle to constants (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-Constants(handles.ep);
+handles.ep.msg=get(handles.ep.LoadText,'String');
+handles.ep.msg=[handles.ep.msg;{'>>Select MSX Reaction Constant.'}];
+set(handles.ep.LoadText,'Value',length(handles.ep.msg)); 
+set(handles.ep.LoadText,'String',handles.ep.msg);
+
+if handles.ep.B.getMSXConstantsCount
+    Constants(handles.ep)
+else
+    uiwait(msgbox('             No constants.','Modal'));
+end
 
 % --- Executes on button press in sources.
 function sources_Callback(hObject, eventdata, handles)
@@ -699,10 +709,10 @@ end
 handles.ep.B.setTimeSimulationDuration(duration*3600)
 
 warning off;
-handles.ep.B.saveInputFile(handles.ep.B.Bintempfile);
-handles.ep.B.LoadFile(handles.ep.B.Bintempfile);
-handles.ep.resMsxNode=handles.ep.B.getMsxComputedQualityNode;
-handles.ep.resMsxLink=handles.ep.B.getMsxComputedQualityLink;
+handles.ep.B.saveInputFile(handles.ep.B.BinTempfile);
+handles.ep.B.loadEPANETFile(handles.ep.B.BinTempfile);
+handles.ep.resMsxNode=handles.ep.B.getMSXComputedQualityNode;
+handles.ep.resMsxLink=handles.ep.B.getMSXComputedQualityLink;
 warning on;
 set(handles.pushbutton17,'enable','on');
 

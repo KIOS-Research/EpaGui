@@ -434,7 +434,11 @@ end
 
 if demandpatterncount    
     nddemandpattern=handles.ep.B.getPatternNameID;
-    nddemandpatternIndex=handles.ep.B.getNodeDemandPatternIndex;  
+    nddemandpatternIndex=handles.ep.B.getNodeDemandPatternIndex; 
+    try
+        nddemandpatternIndex=nddemandpatternIndex{1};
+    catch e
+    end
     for i=1:ndcnt
         if nddemandpatternIndex(i)
             table(i,cp) = {nddemandpattern{nddemandpatternIndex(i)}};
@@ -467,10 +471,12 @@ if sourcepatcount
     ndsourcepat=handles.ep.B.getNodeSourcePatternIndex;
     chisnan=isnan(ndsourcepat);
     for i=1:ndcnt
-        if ~chisnan(i)
+        if chisnan(i)==0
+            table(i,cp) = {'NaN'};
+        elseif ~chisnan(i)
             table(i,cp) = {handles.ep.B.getPatternNameID{ndsourcepat(i)}};
         else
-            table(i,cp) = {num2str(ndsourcepat(i))};
+            table(i,cp) = {'NaN'};%{num2str(ndsourcepat(i))};
         end
     end
     cp=cp+1;

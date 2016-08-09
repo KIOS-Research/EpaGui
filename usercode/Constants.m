@@ -64,9 +64,9 @@ set(handles.figure1,'name','Reaction');
 % uiwait(handles.figure1);
 % COEFFICIENTS
 table = get(handles.uitable1,'data');
-concnt=handles.ep.B.getMsxConstantsCount;
-idconst=handles.ep.B.getMsxConstantsNameID;
-value=handles.ep.B.getMsxConstantsValue;
+concnt=handles.ep.B.getMSXConstantsCount;
+idconst=handles.ep.B.getMSXConstantsNameID;
+value=handles.ep.B.getMSXConstantsValue;
 for i=1:concnt
     table{i,1} = char(idconst(i));   
     table{i,2} = value(i);    
@@ -120,13 +120,13 @@ c = eventdata.EditData; %EditData
 d = str2num(c); % elexgos an einai arithmos ii grammata 
 d = length(d);
 
-values=handles.ep.B.getMsxConstantsValue;
+values=handles.ep.B.getMSXConstantsValue;
 
 if b==2 % for column 2
     
     if d==1 % d=1 then d is number
         values(a)=new;
-        handles.ep.B.setMsxConstantsValue(values); %a = row is index for constant
+        handles.ep.B.setMSXConstantsValue(values); %a = row is index for constant
         table{a,b}=new;   
         set(handles.uitable1,'data',table);
     else

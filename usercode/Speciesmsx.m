@@ -66,13 +66,13 @@ set(handles.figure1,'name','Chemical Species');
 
 table = get(handles.uitable1,'data');
 
-spcount=handles.ep.B.getMsxSpeciesCount;
+spcount=handles.ep.B.getMSXSpeciesCount;
 
-idspecies=handles.ep.B.getMsxSpeciesNameID;
-type=handles.ep.B.getMsxSpeciesType;
-units=handles.ep.B.getMsxSpeciesUnits;
-atol=handles.ep.B.getMsxSpeciesATOL;
-rtol=handles.ep.B.getMsxSpeciesRTOL;
+idspecies=handles.ep.B.getMSXSpeciesNameID;
+type=handles.ep.B.getMSXSpeciesType;
+units=handles.ep.B.getMSXSpeciesUnits;
+atol=handles.ep.B.getMSXSpeciesATOL;
+rtol=handles.ep.B.getMSXSpeciesRTOL;
 for i=1:spcount
     table{i,1} = char(idspecies{i});
     table{i,2} = char(type{i});

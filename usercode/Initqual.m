@@ -113,13 +113,13 @@ Idspecies{1} = char('Type');
 Idspecies{2} = char('ID');
 columneditTable{1} =  false; % false = 0, %True=1
 columneditTable{2} = false;
-initquals=handles.ep.B.getMsxNodeInitqualValue;%nodeindex speciesindex
-idsp=handles.ep.B.getMsxSpeciesNameID;
-units=handles.ep.B.getMsxSpeciesUnits;
+initquals=handles.ep.B.getMSXNodeInitqualValue;%nodeindex speciesindex
+idsp=handles.ep.B.getMSXSpeciesNameID;
+units=handles.ep.B.getMSXSpeciesUnits;
 W=3;
 for i=1:ndcnt  %for each node, calculate value for species.
     t=3;
-    for j=1:handles.ep.B.getMsxSpeciesCount
+    for j=1:handles.ep.B.getMSXSpeciesCount
        table{i,t} = initquals{i}(j); 
        t=t+1; % column
        columneditTable{W} = true;
@@ -167,13 +167,13 @@ Idspecies{1} = char('Type');
 Idspecies{2} = char('ID');
 columneditTable{1} =  false; % false = 0, %True=1
 columneditTable{2} = false;
-initquals=handles.ep.B.getMsxLinkInitqualValue;%linkindex speciesindex
-idsp=handles.ep.B.getMsxSpeciesNameID;
-units=handles.ep.B.getMsxSpeciesUnits;
+initquals=handles.ep.B.getMSXLinkInitqualValue;%linkindex speciesindex
+idsp=handles.ep.B.getMSXSpeciesNameID;
+units=handles.ep.B.getMSXSpeciesUnits;
 W=3;
 for i=1:lcnt  %for each node, calculate value for species.
     t=3;
-    for j=1:handles.ep.B.getMsxSpeciesCount
+    for j=1:handles.ep.B.getMSXSpeciesCount
        table{i,t} = initquals{i}(j); 
        t=t+1; % column
        columneditTable{W} = true;
@@ -222,10 +222,10 @@ index = row ; % from table, index for node  = row
 
 %NODES
 spindex=column-2;
-values=handles.ep.B.getMsxNodeInitqualValue;
+values=handles.ep.B.getMSXNodeInitqualValue;
 if d==1 % an den einai grammata sinexise
     values{index}(spindex)=new;%
-    handles.ep.B.setMsxNodeInitqualValue(values)  
+    handles.ep.B.setMSXNodeInitqualValue(values)  
     table{row,column} = new ; 
     set(handles.uitable1,'data',table);
     return;
@@ -257,10 +257,10 @@ index = row ; % from table, index for node  = row
 
 %LINKS
 spindex=column-2;
-values=handles.ep.B.getMsxLinkInitqualValue;
+values=handles.ep.B.getMSXLinkInitqualValue;
 if d==1 % an den einai grammata sinexise
     values{index}(spindex)=new;%
-    handles.ep.B.setMsxLinkInitqualValue(values)  
+    handles.ep.B.setMSXLinkInitqualValue(values)  
     table{row,column} = new ; 
     set(handles.uitable2,'data',table);
     return;
